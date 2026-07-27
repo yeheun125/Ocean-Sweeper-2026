@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>바다 친구 낚시 도우미</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <p class="eyebrow">FISHING HELPER</p>
+        <h1>바다 친구 낚시 도우미</h1>
+        <p class="intro">물고기와 크기를 입력하면 오늘 잡아도 되는지 알려드려요.</p>
+      </header>
+
+      <form id="fishing-form" class="card">
+        <section>
+          <h2>1. 물고기 사진</h2>
+          <label class="upload-box" for="fish-photo">
+            <span id="upload-message">사진을 선택해 주세요</span>
+            <img id="photo-preview" alt="선택한 물고기 사진 미리보기" hidden />
+          </label>
+          <input id="fish-photo" type="file" accept="image/*" />
+          <p class="hint">이 간단한 버전에서는 사진을 보여 주기만 하고, 물고기 종류는 아래에서 직접 고릅니다.</p>
+        </section>
+
+        <section>
+          <h2>2. 낚시 정보</h2>
+          <div class="form-grid">
+            <label>물고기 종류
+              <select id="fish-type" required>
+                <option value="">종류를 선택하세요</option>
+              </select>
+            </label>
+            <label>물고기 크기 (cm)
+              <input id="fish-size" type="number" min="0" step="0.1" placeholder="예: 23.5" required />
+            </label>
+            <label>낚시한 지역
+              <input id="fishing-area" type="text" maxlength="30" placeholder="예: 부산 해운대" required />
+            </label>
+          </div>
+        </section>
+
+        <button type="submit">잡아도 되는지 확인하기</button>
+      </form>
+
+      <section id="result" class="result" aria-live="polite" hidden></section>
+
+      <section class="release-card card">
+        <div class="release-title">
+          <span aria-hidden="true">🐟</span>
+          <div>
+            <p class="eyebrow">CATCH &amp; RELEASE</p>
+            <h2>방생 5회 인증 쿠폰</h2>
+          </div>
+        </div>
+        <p>물고기를 안전하게 방생했다면 사진을 올려 인증해 보세요. 5회가 쌓이면 낚시 용품 할인 쿠폰을 드려요.</p>
+        <p id="release-count" class="release-count">현재 인증 횟수: 0 / 5회</p>
+        <label class="photo-label" for="release-photo">방생 사진 선택</label>
+        <input id="release-photo" type="file" accept="image/*" />
+        <div id="release-photo-preview" class="release-photo-preview" hidden>
+          <img id="release-preview-image" alt="선택한 방생 사진 미리보기" />
+          <p id="release-photo-name"></p>
+        </div>
+        <div class="release-details">
+          <label>방생한 물고기<select id="release-fish-type" required><option value="">종류를 선택하세요</option></select></label>
+          <label>방생 장소<input id="release-area" type="text" maxlength="30" placeholder="예: 부산 해운대" /></label>
+          <label>방생 날짜<input id="release-date" type="date" /></label>
+        </div>
+        <label class="check-label"><input id="release-check" type="checkbox" /> 사진 속 물고기를 안전하게 방생했음을 확인합니다.</label>
+        <button id="release-button" type="button" class="coupon-button">방생 인증하기</button>
+        <div id="coupon-result" class="coupon-result" aria-live="polite" hidden></div>
+        <p class="verification-note">사진과 입력 정보는 이 기기 안에서만 확인합니다. 실제 쿠폰 발급에는 운영자의 사진 검토 또는 공식 인증 시스템이 필요합니다.</p>
+      </section>
+
+      <section class="notice">
+        <h2>알아두세요</h2>
+        <p>이 앱의 규정은 학습용 예시입니다. 실제 낚시 전에는 해당 지역의 최신 공식 규정을 꼭 확인하세요.</p>
+      </section>
+    </main>
+    <script src="fish-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
