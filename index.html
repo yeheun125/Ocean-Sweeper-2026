@@ -1,84 +1,236 @@
+
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>바다 친구 낚시 도우미</title>
+    <meta name="theme-color" content="#063b55" />
+    <title>살아남아라, 물고기!</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="app">
-      <header>
-        <p class="eyebrow">FISHING HELPER</p>
-        <h1>바다 친구 낚시 도우미</h1>
-        <p class="intro">물고기와 크기를 입력하면 오늘 잡아도 되는지 알려드려요.</p>
-      </header>
+    <header class="topbar">
+      <button class="brand" type="button" data-go="home" aria-label="홈으로">
+        <span class="brand-mark">🐟</span>
+        <span>살아남아라, 물고기!</span>
+      </button>
+      <div class="top-actions">
+        <span class="season-chip">7월 보호 알림 · 참돔 산란기</span>
+        <button class="point-pill" type="button" data-go="rewards"><span id="header-points">0</span>P</button>
+      </div>
+    </header>
 
-      <form id="fishing-form" class="card">
-        <section>
-          <h2>1. 물고기 사진</h2>
-          <label class="upload-box" for="fish-photo">
-            <span id="upload-message">사진을 선택해 주세요</span>
-            <img id="photo-preview" alt="선택한 물고기 사진 미리보기" hidden />
-          </label>
-          <input id="fish-photo" type="file" accept="image/*" />
-          <p class="hint">이 간단한 버전에서는 사진을 보여 주기만 하고, 물고기 종류는 아래에서 직접 고릅니다.</p>
-        </section>
-
-        <section>
-          <h2>2. 낚시 정보</h2>
-          <div class="form-grid">
-            <label>물고기 종류
-              <select id="fish-type" required>
-                <option value="">종류를 선택하세요</option>
-              </select>
-            </label>
-            <label>물고기 크기 (cm)
-              <input id="fish-size" type="number" min="0" step="0.1" placeholder="예: 23.5" required />
-            </label>
-            <label>낚시한 지역
-              <input id="fishing-area" type="text" maxlength="30" placeholder="예: 부산 해운대" required />
-            </label>
+    <main>
+      <section id="home-view" class="view">
+        <div class="hero">
+          <div class="hero-shade"></div>
+          <div class="hero-content">
+            <p class="overline">BUSAN MARINE CONSERVATION</p>
+            <h1>살아남아라,<br /><span>물고기!</span></h1>
+            <p class="hero-copy">사진 한 장으로 어종과 포획 기준을 확인하고,<br />어린 물고기를 부산 바다로 돌려보내 주세요.</p>
+            <button class="primary hero-cta" type="button" data-go="analyze">물고기 확인 시작하기 <span>→</span></button>
           </div>
-        </section>
+          <div class="wave wave-one"></div>
+          <div class="wave wave-two"></div>
+        </div>
 
-        <button type="submit">잡아도 되는지 확인하기</button>
-      </form>
-
-      <section id="result" class="result" aria-live="polite" hidden></section>
-
-      <section class="release-card card">
-        <div class="release-title">
-          <span aria-hidden="true">🐟</span>
-          <div>
-            <p class="eyebrow">CATCH &amp; RELEASE</p>
-            <h2>방생 5회 인증 쿠폰</h2>
+        <div class="home-content">
+          <div class="section-heading">
+            <div><p class="overline dark">QUICK START</p><h2>무엇을 도와드릴까요?</h2></div>
+            <p>필요한 메뉴를 선택해 바로 시작하세요.</p>
           </div>
+          <div class="main-menu">
+            <button class="menu-card analyze-card" type="button" data-go="analyze">
+              <span class="menu-icon">◎</span><span><b>물고기 종류 확인</b><small>사진 분석 · AR 길이 측정 · 포획 기준</small></span><i>01</i>
+            </button>
+            <button class="menu-card reward-card" type="button" data-go="rewards">
+              <span class="menu-icon">◇</span><span><b>포인트 교환</b><small>방생 리워드 · 기프트콘 · 도전과제</small></span><i>02</i>
+            </button>
+            <button class="menu-card book-card" type="button" data-go="collection">
+              <span class="menu-icon">▤</span><span><b>물고기 도감</b><small>발견 어종 · 크기 · 방생 기록</small></span><i>03</i>
+            </button>
+          </div>
+
+          <div class="insight-grid">
+            <article class="info-card">
+              <span class="card-kicker">오늘의 보호 안내</span>
+              <h3>작은 물고기는 미래의 부산 바다입니다.</h3>
+              <p>금지체장과 금어기는 지역과 시기에 따라 달라질 수 있습니다. 포획 전 공식 기준을 꼭 확인하세요.</p>
+              <a href="https://www.mof.go.kr/doc/ko/selectDoc.do?bbsSeq=22&docSeq=59773&menuSeq=1009" target="_blank" rel="noreferrer">해양수산부 기준 보기 ↗</a>
+            </article>
+            <article class="stats-card">
+              <div><small>나의 방생</small><strong id="home-release-count">0회</strong></div>
+              <div><small>도감 발견</small><strong id="home-species-count">0종</strong></div>
+              <div><small>연속 실천</small><strong id="home-streak">0일</strong></div>
+            </article>
+          </div>
+
+          <section class="quiz-card">
+            <div><p class="overline dark">OCEAN QUIZ</p><h3>금지체장보다 작은 물고기는 어떻게 해야 할까요?</h3></div>
+            <div class="quiz-actions">
+              <button type="button" data-quiz="wrong">집으로 가져간다</button>
+              <button type="button" data-quiz="correct">즉시 안전하게 방생한다</button>
+            </div>
+            <p id="quiz-result" class="quiz-result" aria-live="polite"></p>
+          </section>
         </div>
-        <p>물고기를 안전하게 방생했다면 사진을 올려 인증해 보세요. 5회가 쌓이면 낚시 용품 할인 쿠폰을 드려요.</p>
-        <p id="release-count" class="release-count">현재 인증 횟수: 0 / 5회</p>
-        <label class="photo-label" for="release-photo">방생 사진 선택</label>
-        <input id="release-photo" type="file" accept="image/*" />
-        <div id="release-photo-preview" class="release-photo-preview" hidden>
-          <img id="release-preview-image" alt="선택한 방생 사진 미리보기" />
-          <p id="release-photo-name"></p>
-        </div>
-        <div class="release-details">
-          <label>방생한 물고기<select id="release-fish-type" required><option value="">종류를 선택하세요</option></select></label>
-          <label>방생 장소<input id="release-area" type="text" maxlength="30" placeholder="예: 부산 해운대" /></label>
-          <label>방생 날짜<input id="release-date" type="date" /></label>
-        </div>
-        <label class="check-label"><input id="release-check" type="checkbox" /> 사진 속 물고기를 안전하게 방생했음을 확인합니다.</label>
-        <button id="release-button" type="button" class="coupon-button">방생 인증하기</button>
-        <div id="coupon-result" class="coupon-result" aria-live="polite" hidden></div>
-        <p class="verification-note">사진과 입력 정보는 이 기기 안에서만 확인합니다. 실제 쿠폰 발급에는 운영자의 사진 검토 또는 공식 인증 시스템이 필요합니다.</p>
       </section>
 
-      <section class="notice">
-        <h2>알아두세요</h2>
-        <p>이 앱의 규정은 학습용 예시입니다. 실제 낚시 전에는 해당 지역의 최신 공식 규정을 꼭 확인하세요.</p>
+      <section id="analyze-view" class="view page-view" hidden>
+        <div class="page-head">
+          <button class="back-button" type="button" data-go="home">← 홈</button>
+          <p class="overline dark">FISH CHECK</p>
+          <h1>물고기 종류 확인</h1>
+          <p>사진을 올리고 AR 측정값을 입력하면 예시 규정으로 포획 가능 여부를 안내합니다.</p>
+        </div>
+
+        <div class="analyze-layout">
+          <section class="panel upload-panel">
+            <div class="step-title"><span>1</span><div><h2>사진 등록</h2><p>물고기 전체 모습이 선명하게 보이는 사진을 사용하세요.</p></div></div>
+            <label class="upload-zone" for="fish-photo">
+              <img id="photo-preview" alt="분석할 사진 미리보기" hidden />
+              <span id="upload-placeholder"><b>사진을 드래그하거나 선택하세요</b><small>JPG, PNG · 최대 10MB 권장</small></span>
+            </label>
+            <input id="fish-photo" type="file" accept="image/*" capture="environment" />
+            <div class="upload-actions">
+              <label for="fish-photo" class="secondary-button">사진 업로드</label>
+              <label for="fish-photo" class="camera-button">카메라 촬영</label>
+            </div>
+            <div class="demo-notice"><b>AI 데모 모드</b><span>실제 AI API 연결 전 단계입니다. 분석 결과는 반드시 직접 확인하세요.</span></div>
+          </section>
+
+          <section class="panel measure-panel">
+            <div class="step-title"><span>2</span><div><h2>AR 길이 측정</h2><p>화면 측정선을 물고기 머리와 꼬리에 맞춰 주세요.</p></div></div>
+            <div id="ar-stage" class="ar-stage">
+              <p id="ar-empty">사진을 먼저 등록하면 측정 화면이 열립니다.</p>
+              <div id="measure-line" class="measure-line" hidden><i></i><span id="measure-label">25.0 cm</span><i></i></div>
+            </div>
+            <label class="range-label">측정선 길이 <output id="length-output">25.0cm</output>
+              <input id="length-range" type="range" min="5" max="100" step="0.5" value="25" />
+            </label>
+            <div class="calibration-row">
+              <label>기준 물체<select id="reference-object"><option value="card">신용카드 (8.56cm)</option><option value="marker">10cm 기준 마커</option></select></label>
+              <button id="ar-help" class="text-button" type="button">측정 방법</button>
+            </div>
+            <p class="measurement-disclaimer">프로토타입 측정값입니다. 실제 AR 측정은 카메라 보정 및 ARCore/ARKit 연동이 필요합니다.</p>
+          </section>
+        </div>
+
+        <section class="panel analysis-panel">
+          <div class="step-title"><span>3</span><div><h2>분석 및 기준 비교</h2><p>자동 추천 어종을 확인한 뒤 분석을 완료하세요.</p></div></div>
+          <div class="analysis-inputs">
+            <label>AI 추천 어종<select id="fish-type"><option value="">사진 등록 후 자동 추천</option></select></label>
+            <label>발견 지역<input id="fishing-area" type="text" maxlength="30" value="부산 연안" /></label>
+          </div>
+          <button id="analyze-button" class="primary analyze-button" type="button">AI 분석 결과 확인</button>
+        </section>
+
+        <section id="analysis-result" class="result-panel" aria-live="polite" hidden>
+          <div class="result-glow"></div>
+          <div class="result-status"><span id="result-icon">✓</span><div><small>ANALYSIS RESULT</small><h2 id="result-title"></h2><p id="result-message"></p></div></div>
+          <div class="result-data">
+            <div><small>물고기 이름</small><strong id="result-fish"></strong></div>
+            <div><small>현재 크기</small><strong id="result-size"></strong></div>
+            <div><small>금지체장 기준</small><strong id="result-limit"></strong></div>
+            <div><small>금어기</small><strong id="result-season"></strong></div>
+          </div>
+          <div id="release-guide" class="release-guide" hidden>
+            <h3>올바른 방생 방법</h3>
+            <ol><li>마른 손이나 수건으로 물고기를 세게 잡지 않습니다.</li><li>낚싯바늘을 신속하고 조심스럽게 제거합니다.</li><li>물속에서 몸을 바로 세워 스스로 헤엄칠 때 놓아줍니다.</li></ol>
+            <button id="go-release" class="release-action" type="button">방생 인증하고 포인트 받기</button>
+          </div>
+          <button class="report-button" type="button" data-report>불법 포획 신고 · 해양경찰 122</button>
+        </section>
+      </section>
+
+      <section id="rewards-view" class="view page-view" hidden>
+        <div class="page-head">
+          <button class="back-button" type="button" data-go="home">← 홈</button>
+          <p class="overline dark">REWARDS</p><h1>방생 리워드 & 포인트 교환</h1>
+          <p>바다를 지킨 기록이 포인트가 됩니다.</p>
+        </div>
+        <div class="wallet">
+          <div><small>사용 가능 포인트</small><strong><span id="wallet-points">0</span>P</strong><p>방생 10P · 어린 물고기 추가 5P · 3회 연속 보너스 10P</p></div>
+          <div class="wallet-badge"><span>현재 칭호</span><b id="current-title">첫 항해</b></div>
+        </div>
+
+        <div class="reward-grid">
+          <section class="panel release-cert">
+            <div class="step-title"><span>↗</span><div><h2>방생 인증</h2><p>방생 사진과 정보를 등록해 주세요.</p></div></div>
+            <label class="release-upload" for="release-photo"><span>방생 사진 선택</span><img id="release-preview" alt="방생 사진 미리보기" hidden /></label>
+            <input id="release-photo" type="file" accept="image/*" capture="environment" />
+            <div class="release-fields">
+              <label>어종<select id="release-fish"><option value="">어종 선택</option></select></label>
+              <label>장소<input id="release-area" type="text" placeholder="예: 부산 광안리" /></label>
+              <label>날짜<input id="release-date" type="date" /></label>
+            </div>
+            <label class="confirm-check"><input id="release-check" type="checkbox" /> 실제로 안전하게 방생했음을 확인합니다.</label>
+            <button id="release-submit" class="primary" type="button">방생 인증하기</button>
+            <p id="release-result" class="inline-result" aria-live="polite"></p>
+          </section>
+
+          <section class="panel achievement-panel">
+            <p class="overline dark">ACHIEVEMENTS</p><h2>도전과제</h2>
+            <div id="achievement-list" class="achievement-list"></div>
+          </section>
+        </div>
+
+        <section class="shop-section">
+          <div class="section-heading"><div><p class="overline dark">POINT SHOP</p><h2>포인트 교환</h2></div><p>프로토타입용 예시 교환권입니다.</p></div>
+          <div id="product-grid" class="product-grid"></div>
+        </section>
+
+        <section class="ranking-section panel">
+          <div class="section-heading"><div><p class="overline dark">BUSAN RANKING</p><h2>바다 지킴이 랭킹</h2></div><span>이번 달</span></div>
+          <div id="ranking-list" class="ranking-list"></div>
+        </section>
+      </section>
+
+      <section id="collection-view" class="view page-view" hidden>
+        <div class="page-head">
+          <button class="back-button" type="button" data-go="home">← 홈</button>
+          <p class="overline dark">MY OCEAN BOOK</p><h1>나의 물고기 도감</h1>
+          <p>사진 분석 결과와 방생 기록이 어종별로 자동 정리됩니다.</p>
+        </div>
+        <div class="collection-summary">
+          <div><small>발견한 어종</small><strong id="collection-count">0 / 0</strong></div>
+          <div><small>도감 완성도</small><strong id="collection-percent">0%</strong></div>
+          <div><small>총 방생 기록</small><strong id="collection-releases">0회</strong></div>
+        </div>
+        <div class="collection-tools"><input id="collection-search" type="search" placeholder="물고기 이름 검색" /><select id="collection-filter"><option value="all">전체 도감</option><option value="found">발견한 어종</option><option value="released">방생 기록</option></select></div>
+        <div id="fish-collection" class="fish-collection"></div>
       </section>
     </main>
+
+    <nav class="bottom-nav" aria-label="주요 메뉴">
+      <button class="nav-item active" type="button" data-go="home"><span>⌂</span>홈</button>
+      <button class="nav-item" type="button" data-go="analyze"><span>◎</span>물고기 확인</button>
+      <button class="nav-item" type="button" data-go="rewards"><span>◇</span>포인트</button>
+      <button class="nav-item" type="button" data-go="collection"><span>▤</span>도감</button>
+    </nav>
+
+    <dialog id="help-dialog">
+      <button class="dialog-close" type="button" data-close>×</button><h2>AR 측정 방법</h2>
+      <ol><li>물고기 옆에 신용카드나 10cm 기준 마커를 놓습니다.</li><li>물고기의 머리 끝과 꼬리 끝에 측정선을 맞춥니다.</li><li>표시된 길이를 확인하고 분석을 진행합니다.</li></ol>
+      <p>현재 버전은 사용자가 측정선을 조절하는 프로토타입입니다.</p>
+    </dialog>
+
+    <dialog id="voucher-dialog">
+      <button class="dialog-close" type="button" data-close>×</button>
+      <p class="overline dark">EXCHANGE COMPLETE</p><h2 id="voucher-title">교환 완료</h2>
+      <p id="voucher-description"></p><div id="barcode" class="barcode" aria-label="예시 바코드"></div>
+      <code id="voucher-code"></code><small>실제 사용이 불가능한 프로토타입 교환권입니다.</small>
+      <button class="primary" type="button" data-close>닫기</button>
+    </dialog>
+
+    <dialog id="report-dialog">
+      <button class="dialog-close" type="button" data-close>×</button><h2>불법 포획 신고</h2>
+      <p>긴급하거나 현장에서 즉시 신고가 필요하면 해양경찰 <b>122</b>로 연결하세요.</p>
+      <a class="primary call-link" href="tel:122">해양경찰 122 전화 연결</a>
+      <a class="text-link" href="https://kcg.go.kr/kcg/main.do" target="_blank" rel="noreferrer">해양경찰청 홈페이지 ↗</a>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="fish-data.js"></script>
     <script src="app.js"></script>
   </body>
