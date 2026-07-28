@@ -1,3 +1,4 @@
+
 // 물고기 규정을 수정하고 싶다면 이 파일의 숫자와 날짜를 바꾸세요.
 // minSize: 잡을 수 있는 최소 크기(cm)
 // closedSeason: 잡으면 안 되는 기간. 월과 일만 사용합니다.
@@ -120,6 +121,12 @@ const fishRules = [
     id: "mullet",
     name: "숭어",
     minSize: 25,
+    closedSeason: null
+  },
+  {
+    id: "pufferfish",
+    name: "복어",
+    minSize: 20,
     closedSeason: null
   }
 ];
