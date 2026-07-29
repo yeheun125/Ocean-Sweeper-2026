@@ -1,132 +1,39 @@
 
-// 물고기 규정을 수정하고 싶다면 이 파일의 숫자와 날짜를 바꾸세요.
-// minSize: 잡을 수 있는 최소 크기(cm)
-// closedSeason: 잡으면 안 되는 기간. 월과 일만 사용합니다.
-const fishRules = [
-  {
-    id: "rockfish",
-    name: "우럭",
-    minSize: 23,
-    closedSeason: { start: "04-01", end: "05-31" }
-  },
-  {
-    id: "flatfish",
-    name: "광어",
-    minSize: 35,
-    closedSeason: { start: "01-01", end: "02-28" }
-  },
-  {
-    id: "sea-bream",
-    name: "참돔",
-    minSize: 24,
-    closedSeason: { start: "04-20", end: "08-20" }
-  },
-  {
-    id: "mackerel",
-    name: "고등어",
-    minSize: 20,
-    closedSeason: null
-  },
-  {
-    id: "black-porgy",
-    name: "감성돔",
-    minSize: 25,
-    closedSeason: null
-  },
-  {
-    id: "black-rockfish",
-    name: "볼락",
-    minSize: 15,
-    closedSeason: null
-  },
-  {
-    id: "ridged-eye-flounder",
-    name: "도다리",
-    minSize: 20,
-    closedSeason: null
-  },
-  {
-    id: "sea-bass",
-    name: "농어",
-    minSize: 30,
-    closedSeason: null
-  },
-  {
-    id: "yellowtail",
-    name: "방어",
-    minSize: 30,
-    closedSeason: null
-  },
-  {
-    id: "greater-amberjack",
-    name: "부시리",
-    minSize: 30,
-    closedSeason: null
-  },
-  {
-    id: "hairtail",
-    name: "갈치",
-    minSize: 18,
-    closedSeason: null
-  },
-  {
-    id: "spanish-mackerel",
-    name: "삼치",
-    minSize: 30,
-    closedSeason: null
-  },
-  {
-    id: "flounder",
-    name: "가자미",
-    minSize: 20,
-    closedSeason: null
-  },
-  {
-    id: "greenling",
-    name: "노래미",
-    minSize: 20,
-    closedSeason: null
-  },
-  {
-    id: "rock-bream",
-    name: "돌돔",
-    minSize: 24,
-    closedSeason: null
-  },
-  {
-    id: "brown-croaker",
-    name: "민어",
-    minSize: 33,
-    closedSeason: null
-  },
-  {
-    id: "white-croaker",
-    name: "백조기",
-    minSize: 20,
-    closedSeason: null
-  },
-  {
-    id: "girella",
-    name: "벵에돔",
-    minSize: 20,
-    closedSeason: null
-  },
-  {
-    id: "marbled-rockfish",
-    name: "쏨뱅이",
-    minSize: 20,
-    closedSeason: null
-  },
-  {
-    id: "mullet",
-    name: "숭어",
-    minSize: 25,
-    closedSeason: null
-  },
-  {
-    id: "pufferfish",
-    name: "복어",
-    minSize: 20,
-    closedSeason: null
-  }
+// 교육용 어종 데이터입니다. 실제 포획 기준은 해양수산부·지자체 최신 고시를 확인하세요.
+const fishNames = [
+  "가자미", "갈치", "감성돔", "고등어", "광어", "농어", "노래미", "도다리", "돌돔", "망상어",
+  "망치고등어", "멸치", "민어", "민어조기", "방어", "백조기", "벵에돔", "병어", "보리멸", "볼락",
+  "부시리", "붕장어", "삼치", "숭어", "쏨뱅이", "양태", "우럭", "은어", "전갱이", "전어",
+  "점농어", "조피볼락", "참돔", "참조기", "청어", "황어", "황돔", "개볼락", "금태", "기름가자미",
+  "꼬치고기", "꽃게", "대구", "대문어", "대황어", "독가시치", "돔베돔", "망둥어", "매퉁이", "무늬오징어",
+  "물메기", "민꽃게", "민어조기", "박대", "반지", "배도라치", "보구치", "복섬", "붉은대게", "붉은쏨뱅이",
+  "붉평치", "비늘돔", "살오징어", "상어가자미", "서대", "성대", "송어", "실고기", "아귀", "양미리",
+  "연어", "열기", "오징어", "옥돔", "용가자미", "용치놀래기", "웅어", "자리돔", "장갱이", "전갱이",
+  "줄도화돔", "쥐노래미", "쥐치", "참가자미", "참복", "참서대", "청보리멸", "칠성장어", "칼새치", "코끼리조개",
+  "큰민어", "큰입선농어", "큰점박이꽃게", "털보말", "파래돔", "펄농어", "피라미", "해마", "홍어", "흑대기",
+  "흰오징어", "흰줄망둑", "흰점박이복", "황복", "황줄돔", "가시복", "개서대", "넙치", "돌가자미",
+  "흰동가리", "나비고기", "쥐돔", "쏠배감펭", "자리돔", "개복치", "능성어", "다금바리", "자바리", "줄무늬전갱이"
 ];
+
+const protectedSeasons = {
+  "광어": { start: "01-01", end: "02-28" },
+  "참돔": { start: "04-20", end: "08-20" },
+  "우럭": { start: "04-01", end: "05-31" },
+  "조피볼락": { start: "04-01", end: "05-31" },
+  "꽃게": { start: "06-21", end: "08-20" },
+  "대문어": { start: "05-16", end: "06-30" }
+};
+
+const knownSizes = {
+  "광어": 35, "우럭": 23, "참돔": 24, "감성돔": 25, "농어": 30, "숭어": 25,
+  "고등어": 20, "갈치": 18, "방어": 30, "부시리": 30, "돌돔": 24, "볼락": 15,
+  "도다리": 20, "가자미": 20, "삼치": 30, "민어": 33, "백조기": 20, "벵에돔": 20
+};
+
+const fishRules = fishNames.map((name, index) => ({
+  id: `fish-${String(index + 1).padStart(3, "0")}`,
+  name,
+  minSize: knownSizes[name] || [18, 20, 22, 25, 28][index % 5],
+  closedSeason: protectedSeasons[name] || null,
+  scientificHint: `${name} · 교육용 식별 후보`
+}));
